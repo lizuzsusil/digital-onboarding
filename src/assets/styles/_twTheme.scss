@@ -1,0 +1,38 @@
+@theme {
+  --color-primary: #c4161c;
+  --color-primary-50: #fef2f2;
+  --color-primary-100: #ffe1e2;
+  --color-primary-200: #ffc8ca;
+  --color-primary-300: #ffa1a4;
+  --color-primary-400: #fe6b70;
+  --color-primary-500: #f63d43;
+  --color-primary-600: #e41e25;
+  --color-primary-800: #9e161b;
+  --color-primary-900: #83191d;
+  --color-primary-950: #47080a;
+  --color-secondary: #023f88;
+  --color-secondary-50: #ebf9ff;
+  --color-secondary-100: #d2f2ff;
+  --color-secondary-200: #afe9ff;
+  --color-secondary-300: #78ddff;
+  --color-secondary-400: #39c8ff;
+  --color-secondary-500: #0ba7ff;
+  --color-secondary-600: #0082ff;
+  --color-secondary-700: #0069ff;
+  --color-secondary-800: #0056d4;
+  --color-secondary-950: #072f64;
+}
+
+@layer utilities {
+  .bg-gibl-gradient {
+    background-image: linear-gradient(
+                    90deg,
+                    rgb(197 33 39 / 0.8),
+                    rgb(139 45 72 / 0.85) 25.67%,
+                    rgb(91 55 99 / 0.9) 49.79%,
+                    rgb(57 62 118 / 0.94) 70.98%,
+                    rgb(37 66 130 / 0.98) 88.44%,
+                    #1d4486
+    );
+  }
+}
