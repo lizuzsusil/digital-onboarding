@@ -1,89 +1,155 @@
-'use client'
-import React, {useEffect, useState} from 'react';
-import {FormContainerContextProvider} from "@/contexts/FormContainerContext";
-import {Steps, QRCode, Flex} from "antd";
-import useMessageContext from "@/lib/hooks/useMessageContext";
-import {nanoid} from "nanoid";
-import sha256 from 'crypto-js/sha256';
-import Base64 from "crypto-js/enc-base64";
-import {nagarikWeb0AuthQueries} from "@/services/queries/nagarik-web0Auth/nagarikWeb0AuthQueries";
-import {redirectionCodeQueries} from "@/services/queries/redirection-code/redirectionCodeQueries";
-import Loader from "@/components/Loader";
+"use client"
 
-const {Step} = Steps;
+import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
+import NagarikAppAuthorization from "@/components/PageComponents/NagarikAppAuthorization";
 
-function OnlineAccount() {
-    const {dispatchError} = useMessageContext();
+export default function OnlineAccountPage() {
+    const [appAuthorized, setAppAuthorized] = useState(false)
+    const [formData, setFormData] = useState<any>({
+        personalInformation: {},
+        citizenshipInformation: {},
+        passportInformation: {},
+        permanentAddress: {},
+        temporaryAddress: {},
+        familyDetails: {},
+        accountDetails: {
+            mobile_banking: 0,
+            internet_banking: 0,
+            debit_card: 0,
+            cheque_book: 0,
+            credit_card: 0,
+            locker: 0,
+            demat: 0,
+            bancassurance: 0,
+            declare_nominee: 0,
+            declare_nominee_authorize: 0,
+        },
+        professionalDetails: {
+            profession: "Professional",
+            education_qualification: "Graduate",
+            source_of_income: [],
+            related_businesses: [
+                {
+                    name: "",
+                    address: "",
+                    position: "",
+                    approx_remuneration: "",
+                },
+            ],
+            related_colleges: [
+                {
+                    name: "",
+                    address: "",
+                    phone: "",
+                },
+            ],
+            anticipated_annual_transaction: "up to 0.1 Million",
+            anticipated_no_transaction: "up to 50",
+        },
+        verification: {
+            financial_link: 0,
+            criminal_activity: 0,
+            politician: 0,
+            foreign_country: 0,
+            agree_conditions: 1,
+        },
+    })
+    const [eligibilityErrors, setEligibilityErrors] = useState<string | null>(null)
+    const [checkAlreadyAppliedData, setCheckAlreadyAppliedData] = useState<any>(null)
 
-    const {data, isSuccess, isError} = redirectionCodeQueries.useGetRedirectionCode()
-    const {
-        mutate: postChallengeHash,
-        data: mutationData,
-        isSuccess: mutationIsSuccess,
-        isPending: mutationIsPending,
-        isError: mutationIsError,
-        error,
-    } = nagarikWeb0AuthQueries.usePostChallengeHash()
-
-    const [qrCodeValue, setQrCodeValue] = useState<string>("");
+    const searchParams = useSearchParams()
+    const accountType = searchParams.get("accountType")
 
     useEffect(() => {
-        if (isSuccess && data) {
-            const redirectionCode = data.payload;
-            const fortyLengthString = nanoid(40);
-            const challenge_hash = sha256(fortyLengthString);
-            const challenge_hash_base64 = Base64.stringify(challenge_hash);
-
-            const res = postChallengeHash({
-                challenge_hash: challenge_hash_base64,
-                redirection_code: redirectionCode,
-            });
-
-            setQrCodeValue("client-login::" +
-                challenge_hash_base64 +
-                "::" +
-                res?.data?.tag_number)
+        if (accountType) {
+            setFormData((prev: any) => ({
+                ...prev,
+                account_type_id: accountType,
+            }))
         }
-    }, [isSuccess, data, postChallengeHash]);
+    }, [accountType])
 
-    if (isError) {
-        console.log(isError);
-        // dispatchError(error.message)
+    const handleAuthorizationSuccess = (data: any) => {
+        setAppAuthorized(true)
+        setFormData((prev: any) => ({
+            ...prev,
+            ...data,
+        }))
+        setCheckAlreadyAppliedData(data.checkData)
+    }
+
+    const handleAuthorizationError = (error: string) => {
+        setEligibilityErrors(error)
+    }
+
+    const resetAllData = () => {
+        setAppAuthorized(false)
+        setFormData({
+            personalInformation: {},
+            citizenshipInformation: {},
+            passportInformation: {},
+            permanentAddress: {},
+            temporaryAddress: {},
+            familyDetails: {},
+            accountDetails: {
+                mobile_banking: 0,
+                internet_banking: 0,
+                debit_card: 0,
+                cheque_book: 0,
+                credit_card: 0,
+                locker: 0,
+                demat: 0,
+                bancassurance: 0,
+                declare_nominee: 0,
+                declare_nominee_authorize: 0,
+            },
+            professionalDetails: {
+                profession: "Professional",
+                education_qualification: "Graduate",
+                source_of_income: [],
+                related_businesses: [
+                    {
+                        name: "",
+                        address: "",
+                        position: "",
+                        approx_remuneration: "",
+                    },
+                ],
+                related_colleges: [
+                    {
+                        name: "",
+                        address: "",
+                        phone: "",
+                    },
+                ],
+                anticipated_annual_transaction: "up to 0.1 Million",
+                anticipated_no_transaction: "up to 50",
+            },
+            verification: {
+                financial_link: 0,
+                criminal_activity: 0,
+                politician: 0,
+                foreign_country: 0,
+                agree_conditions: 1,
+            },
+        })
+        setEligibilityErrors(null)
+        setCheckAlreadyAppliedData(null)
     }
 
     return (
-        <div className="container mx-auto">
-            <div className={'w-[265px] h-[265px] m-auto'}>
-                <Flex gap="middle" vertical justify="center" align="center" className={'h-full'}>
-                    {qrCodeValue ? <QRCode
-                        size={256}
-                        className={'h-auto w-full'}
-                        value={qrCodeValue}
-                    /> : <Loader/>}
-                </Flex>
+            <div className="flex flex-center">
+                {!appAuthorized ? (
+                    <NagarikAppAuthorization
+                        handleSuccess={handleAuthorizationSuccess}
+                        handleError={handleAuthorizationError}
+                        eligibilityErrors={eligibilityErrors}
+                    />
+                ) : (
+                    <h1>Test</h1>
+                )}
             </div>
-
-            {/*<Steps current={currentStep}>
-                <Step title={"Fill in your details"}/>
-                <Step title={"Address details"}/>
-                <Step title={"Review and Save"}/>
-            </Steps>
-            <main>
-                {renderStep(currentStep)}
-            </main>*/}
-        </div>
     )
 }
 
-export default function Page() {
-    return (
-        <FormContainerContextProvider form={{
-            defaultValues: {
-                name: '',
-                address: ''
-            }
-        }}>
-            <OnlineAccount/>
-        </FormContainerContextProvider>
-    );
-}

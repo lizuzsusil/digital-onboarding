@@ -1,18 +1,18 @@
 export interface BankAccountModel {
-    name: string;
-    account_class: string;
-    details_caption1: string;
-    details_content1: string;
-    details_caption2: string;
-    details_content2: string;
-    details_caption3: string;
-    details_content3: string;
-    details_caption4: string;
-    details_content4: string;
-    description_link: string;
-    order: string;
-    currency_title: string;
-    currency_code: string;
+    id: number;
+    account_type_category_id: number | null;
+    title: string;
+    code: string;
+    interest: number | null;
+    description: string | null;
+    additionalBenefits: string | null;
+    eligibility: string | null;
+    min_balance: number | null;
+    insurance: string | null;
+    created_at: string | null;
+    updated_at: string | null;
+    deleted_at: string | null;
+    image_url: string;
 }
 
 export interface BankAccountResponse {

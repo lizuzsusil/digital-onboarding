@@ -1,14 +1,14 @@
 import React from 'react';
-import {Spin} from 'antd';
+import {Spin, SpinProps} from 'antd';
 
-interface LoaderProps {
+interface LoaderProps extends SpinProps {
     content?: string;
     type?: 'page' | 'component';
 }
 
-function Loader({content}: LoaderProps) {
+function Loader({content, ...rest}: LoaderProps) {
     return (
-        <Spin>{content}</Spin>
+        <Spin {...rest}>{content}</Spin>
     );
 }
 

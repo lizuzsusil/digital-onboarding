@@ -15,21 +15,15 @@ function AccountCard() {
         accountTypes?.data.map((accountType, index) => (
             <div className="card" key={index}>
                 <div className="imgBx">
-                    <Image src={Logo} loading='lazy'
-                           alt={accountType.name}
+                    <Image src={accountType.image_url} loading='lazy'
+                           alt={accountType.title} width={200} height={200}
                     />
                 </div>
                 <div className="contextBx">
-                    <h3 className='text-center'>{accountType.name}</h3>
-                    <h2 className="price">{accountType.details_content1}</h2>
-                    <hr/>
-                    <div>
-                        <div className="label">
-                            Born On or After 1995 AD
-                        </div>
-                    </div>
+                    <h3 className='text-center'>{accountType.title}</h3>
                     <div className="flex justify-between items-center w-full">
-                        <Link href={accountType.description_link} className="buy" target={'_blank'}>Learn More</Link>
+                        {accountType.description &&
+                            <Link href={accountType.description} className="buy" target={'_blank'}>Learn More</Link>}
                         <Link href="/online-account" className="buy">Apply</Link>
                     </div>
                 </div>

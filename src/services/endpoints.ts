@@ -1,4 +1,4 @@
-// import '../../typings'
+import '../../typings'
 
 /// Read this before making any changes
 ///
@@ -22,14 +22,19 @@
 const baseURI = process.env.NEXT_PUBLIC_API_BASE_URL
 const nagarikAppBaseURI = process.env.NEXT_PUBLIC_NAGARIK_APP_BASE_URL
 
-const apiRoot = `${baseURI}/res`
-const nagarikAppApiRoot = `${nagarikAppBaseURI}/api`
+const apiRoot = `${baseURI}/api`
+const nagarikAppApiRoot = `${nagarikAppBaseURI}`
 
-export const apiNagarikCheckAuthTypeBase = `${nagarikAppApiRoot}`
+export const apiNagarikCheckAuthTypeBase = `${nagarikAppApiRoot}/api`
 export const apiNagarikCheckAuth = `${apiNagarikCheckAuthTypeBase}/web0auth/check`
+export const apiNagarikGetDistricts = `${apiNagarikCheckAuthTypeBase}/registration/districts`
 
-export const apiGetAllAccountTypeBase = `${apiRoot}/response.json`
-export const apiGetAllAccountTypes = `${apiGetAllAccountTypeBase}`
+export const apiNagarikWsURI = `${nagarikAppApiRoot}/nagarik-ws`
 
-// export const apiFetchRedirectionCode = `${apiRoot}/nagarik-app/fetch-redirection-code`
-export const apiFetchRedirectionCode = `${apiRoot}/rCode.json`
+export const apiGetAllAccountTypeBase = `${apiRoot}/account-types`
+export const apiGetAllAccountTypes = `${apiGetAllAccountTypeBase}/all`
+
+
+export const apiFetchBase = `${apiRoot}/nagarik-app`
+export const apiFetchRedirectionCode = `${apiFetchBase}/fetch-redirection-code`
+export const apiFetchCitizenshipDetails = `${apiFetchBase}/fetch-citizens-detail`

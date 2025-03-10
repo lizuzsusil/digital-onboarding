@@ -17,7 +17,7 @@ export const accountTypeQueries = {
     useGetAllAccountTypes: () => {
         return useQuery({
             queryKey: accountQueryKeys.ACCOUNT_TYPES,
-            queryFn: accountTypeApi.fetchAll,
+            queryFn: accountTypeApi.fetchAll
         });
     },
 };
