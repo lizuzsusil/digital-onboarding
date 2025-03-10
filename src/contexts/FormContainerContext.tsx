@@ -1,5 +1,7 @@
-import React, { createContext } from 'react'
-import { FieldValues, useForm, UseFormProps, UseFormReturn } from 'react-hook-form'
+'use client';
+
+import React, {createContext} from 'react'
+import {FieldValues, useForm, UseFormProps, UseFormReturn} from 'react-hook-form'
 
 export const FormContainerContext = createContext<FormContainerContextInterface<any, any> | undefined>(undefined)
 
@@ -20,11 +22,11 @@ export function FormContainerContextProvider<T extends FieldValues, Transformed 
     const form = useForm<T, unknown, Transformed>({
         mode: 'onSubmit',
         reValidateMode: 'onBlur', ...(formProps ?? {}),
-        resetOptions: { keepErrors: false, ...(formProps?.resetOptions ?? {}) }
+        resetOptions: {keepErrors: false, ...(formProps?.resetOptions ?? {})}
     })
 
     return (
-        <FormContainerContext.Provider value={{ form }}>
+        <FormContainerContext.Provider value={{form}}>
             {children}
         </FormContainerContext.Provider>
     )

@@ -1,7 +1,6 @@
 import {useQuery} from '@tanstack/react-query';
 import {accountTypeApi} from "@/services/api/account";
-import {QueryKeys} from "@/services/queries/account/accountKeys";
-import {QueryConfig} from "@/services/queryConfig";
+import {accountQueryKeys} from "@/services/queries/account/accountKeys";
 
 /*export const accountTypeQueries = {
     useAllAccountTypes: (
@@ -10,17 +9,15 @@ import {QueryConfig} from "@/services/queryConfig";
         return useQuery<BankAccount[], Error>({
             queryKey: ['account-types'],
             queryFn: accountTypeApi.fetchAll,
-            ...QueryConfig
         });
     },
 }*/
 
 export const accountTypeQueries = {
-    useAllAccountTypes: () => {
+    useGetAllAccountTypes: () => {
         return useQuery({
-            queryKey: QueryKeys.ACCOUNT_TYPES,
+            queryKey: accountQueryKeys.ACCOUNT_TYPES,
             queryFn: accountTypeApi.fetchAll,
-            ...QueryConfig
         });
     },
 };

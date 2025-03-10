@@ -20,8 +20,16 @@
 ///
 
 const baseURI = process.env.NEXT_PUBLIC_API_BASE_URL
+const nagarikAppBaseURI = process.env.NEXT_PUBLIC_NAGARIK_APP_BASE_URL
 
-const apiRoot = `${baseURI}/api/v2`
+const apiRoot = `${baseURI}/res`
+const nagarikAppApiRoot = `${nagarikAppBaseURI}/api`
 
-export const apiGetAllAccountTypeBase = `${apiRoot}/list_movies.json`
-export const apiGetAllAccountTypes = `${apiGetAllAccountTypeBase}/{test}`
+export const apiNagarikCheckAuthTypeBase = `${nagarikAppApiRoot}`
+export const apiNagarikCheckAuth = `${apiNagarikCheckAuthTypeBase}/web0auth/check`
+
+export const apiGetAllAccountTypeBase = `${apiRoot}/response.json`
+export const apiGetAllAccountTypes = `${apiGetAllAccountTypeBase}`
+
+// export const apiFetchRedirectionCode = `${apiRoot}/nagarik-app/fetch-redirection-code`
+export const apiFetchRedirectionCode = `${apiRoot}/rCode.json`

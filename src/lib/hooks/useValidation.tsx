@@ -15,13 +15,15 @@ type APIStateTypes = 'validation' | 'failure' | 'success';
 
 // Hook accepts a query or mutation result
 export default function useValidation<TData, TError extends { response?: { data?: APIResponse } }>(
-    result: UseQueryResult<TData, TError> | UseMutationResult<TData, TError, any, any>
+    result: UseQueryResult<TData, TError> | UseMutationResult<TData, TError, unknown, unknown>
 ) {
     // Determine if there's an error and its type
     const isError = result.isError;
     const error = result.error;
 
     // Check if the error is a validation error (adjust logic based on your API)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     const isValidationError = isError && error?.response?.data?.payload?.length > 0;
     const validation = isValidationError ? error?.response?.data : undefined;
     const failureMessage = isError && !isValidationError ? error?.response?.data?.message : undefined;

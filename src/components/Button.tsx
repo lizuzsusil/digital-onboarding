@@ -21,7 +21,7 @@ function Button({
     return (
         <ButtonAntd
             onClick={onClick}
-            className={`${styleClass} bg-primary`}
+            className={`${styleClass}`}
             iconPosition={iconPosition}
             type={type}
             {...restProps}

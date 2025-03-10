@@ -1,17 +1,27 @@
-import '@ant-design/v5-patch-for-react-19';
-import Index from "./index"
-import {ConfigProvider} from "antd";
-import React from "react";
-import themeConfig, {themePrefix} from "@/lib/theme/themeConfig";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import {
+    dehydrate,
+    HydrationBoundary,
+    QueryClient,
+} from '@tanstack/react-query'
+import {accountQueryKeys} from "@/services/queries/account/accountKeys";
+import AccountCard from "@/components/AccountCard";
+import {accountTypeApi} from "@/services/api/account";
 
-export default function Home() {
+export default async function Home() {
+    const queryClient = new QueryClient()
+
+    await queryClient.prefetchQuery({
+        queryKey: accountQueryKeys.ACCOUNT_TYPES,
+        queryFn: accountTypeApi.fetchAll,
+    })
+
     return (
-        <ConfigProvider theme={themeConfig} prefixCls={themePrefix}>
-            <Header/>
-            <Index/>
-            <Footer/>
-        </ConfigProvider>
-    );
+        <HydrationBoundary state={dehydrate(queryClient)}>
+            <div className="container mx-auto my-8">
+                <div className="grid grid-cols-4 gap-4">
+                    <AccountCard/>
+                </div>
+            </div>
+        </HydrationBoundary>
+    )
 }

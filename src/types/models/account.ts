@@ -1,4 +1,4 @@
-export interface BankAccount {
+export interface BankAccountModel {
     name: string;
     account_class: string;
     details_caption1: string;
@@ -17,6 +17,6 @@ export interface BankAccount {
 
 export interface BankAccountResponse {
     code: number;
-    data: BankAccount[];
+    data: BankAccountModel[];
     message: string;
 }
