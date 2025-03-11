@@ -1,10 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import NagarikAppAuthorization from "@/components/PageComponents/NagarikAppAuthorization";
+import {FormContainerContextProvider} from "@/contexts/FormContainerContext";
 
-export default function OnlineAccountPage() {
+function OnlineAccount() {
     const [appAuthorized, setAppAuthorized] = useState(false)
     const [formData, setFormData] = useState<any>({
         personalInformation: {},
@@ -153,3 +154,16 @@ export default function OnlineAccountPage() {
     )
 }
 
+
+export default function Page() {
+    return (
+        <FormContainerContextProvider form={{
+            defaultValues: {
+                name: '',
+                address: ''
+            }
+        }}>
+            <OnlineAccount/>
+        </FormContainerContextProvider>
+    );
+}

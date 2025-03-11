@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "@/assets/images/gibl-logo.png"
 import {accountTypeQueries} from "@/services/queries/account/accountQueries";
 
 function AccountCard() {

@@ -1,6 +1,4 @@
-"use client"
-
-import {useEffect, useState} from "react"
+import {useCallback, useEffect, useState} from "react"
 import {Alert, Card, QRCode, Typography, Button} from "antd"
 import {ReloadOutlined} from "@ant-design/icons"
 import Base64 from "crypto-js/enc-base64"
@@ -36,11 +34,12 @@ export default function NagarikAppAuthorization({
         data: challengeHashData
     } = nagarikWeb0AuthQueries.usePostChallengeHash()
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {data: citizenshipDetails} = citizenDetailQueries.useFetchCitizenDetails(authCode);
 
-    const fetchRedirectionCode = async (type?: string) => {
+    const fetchRedirectionCode = useCallback(async (type?: string) => {
         setQrLoading(true)
-        setShowRefreshBtn(false)
+        // setShowRefreshBtn(false)
 
         if (type === "static") return
 
@@ -50,17 +49,17 @@ export default function NagarikAppAuthorization({
             setQrLoading(false)
             console.error("Error fetching redirection code:", error)
         }
-    }
+    }, [refetchRedirectionCode])
 
     useEffect(() => {
         if (authCode) {
             handleSuccess(authCode)
         }
-    }, [authCode]);
+    }, [authCode, handleSuccess]);
 
     useEffect(() => {
         fetchRedirectionCode().then()
-    }, [])
+    }, [fetchRedirectionCode])
 
     useEffect(() => {
         if (redirectionCodeData) {
@@ -84,6 +83,7 @@ export default function NagarikAppAuthorization({
                                     setAuthCode(response.authorization_code)
                                 } else {
                                     setShowRefreshBtn(true)
+                                    handleError(response)
                                     console.log("Cancelled by user")
                                 }
                             },
@@ -125,7 +125,7 @@ export default function NagarikAppAuthorization({
                                 </div>
                             ) : (
                                 <div className="relative">
-                                    <QRCode value={qrValue || "Error"} size={261} bordered={false} errorLevel="L"/>
+                                    <QRCode value={qrValue || "Error"} size={261} color={'#000000'} errorLevel="L"/>
                                     <Button
                                         type="primary"
                                         shape="circle"

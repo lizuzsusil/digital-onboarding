@@ -31,9 +31,21 @@ export const apiNagarikGetDistricts = `${apiNagarikCheckAuthTypeBase}/registrati
 
 export const apiNagarikWsURI = `${nagarikAppApiRoot}/nagarik-ws`
 
+export const apiGetAllDistrictsBase = `${apiRoot}/districts`
+export const apiGetAllDistricts = `${apiGetAllDistrictsBase}/all`
+export const apiGetDistrictById = `${apiGetAllDistrictsBase}/ngid/{id}`
+
+export const apiGetAllStatesBase = `${apiRoot}/states`
+export const apiGetAllStates = `${apiGetAllStatesBase}/all`
+
+export const apiGetAllBranchesBase = `${apiRoot}/branches`
+export const apiGetAllBranches = `${apiGetAllBranchesBase}/all`
+
+export const apiGetAllCitiesBase = `${apiRoot}/cities`
+export const apiGetAllCities = `${apiGetAllCitiesBase}/all`
+
 export const apiGetAllAccountTypeBase = `${apiRoot}/account-types`
 export const apiGetAllAccountTypes = `${apiGetAllAccountTypeBase}/all`
-
 
 export const apiFetchBase = `${apiRoot}/nagarik-app`
 export const apiFetchRedirectionCode = `${apiFetchBase}/fetch-redirection-code`

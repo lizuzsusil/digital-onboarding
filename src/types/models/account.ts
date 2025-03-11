@@ -1,5 +1,6 @@
-export interface BankAccountModel {
-    id: number;
+import {PrimaryBase, TimeStampBase} from "@/types/models/base";
+
+export interface BankAccountModel extends PrimaryBase, TimeStampBase {
     account_type_category_id: number | null;
     title: string;
     code: string;
@@ -9,9 +10,6 @@ export interface BankAccountModel {
     eligibility: string | null;
     min_balance: number | null;
     insurance: string | null;
-    created_at: string | null;
-    updated_at: string | null;
-    deleted_at: string | null;
     image_url: string;
 }
 
