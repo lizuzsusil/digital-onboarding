@@ -1,13 +1,37 @@
 import {useQuery} from '@tanstack/react-query';
-import {citizenDetailsApi} from "@/services/api/citizenDetails";
-import {citizenDetailKeys} from "@/services/queries/citizen-detail/citizenDetailKeys";
+import {locationApi} from "@/services/api/location";
+import {locationKeys} from "@/services/queries/location/locationKeys";
 
-export const citizenDetailQueries = {
-    useFetchCitizenDetails: (authorization_code: string) => {
+export const locationQueries = {
+    useFetchAllBranches: () => {
         return useQuery({
-            queryKey: [citizenDetailKeys.CITIZENSHIP_DETAILS, authorization_code],
-            queryFn: () => citizenDetailsApi.fetchCitizenDetails(authorization_code),
-            enabled: !!authorization_code,
+            queryKey: locationKeys.LOCATION_BRANCHES,
+            queryFn: locationApi.fetchAllBranches,
+        });
+    },
+    useFetchAllStates: () => {
+        return useQuery({
+            queryKey: locationKeys.LOCATION_STATE,
+            queryFn: locationApi.fetchAllStates,
+        });
+    },
+    useFetchAllCities: () => {
+        return useQuery({
+            queryKey: locationKeys.LOCATION_CITIES,
+            queryFn: locationApi.fetchAllCities,
+        });
+    },
+    useFetchAllDistricts: () => {
+        return useQuery({
+            queryKey: locationKeys.LOCATION_DISTRICTS_ALL,
+            queryFn: locationApi.fetchAllDistricts,
+        });
+    },
+    useFetchDistrictById: (id: number) => {
+        return useQuery({
+            queryKey: locationKeys.LOCATION_DISTRICT,
+            queryFn: () => locationApi.fetchDistrictById(id),
+            enabled: !!id,
         });
     },
 };
