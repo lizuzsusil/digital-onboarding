@@ -128,4 +128,5 @@ interface Verification {
     foreign_country: number;
     agree_conditions: number;
     politician: number;
+    criminal_activity_desc: string
 }

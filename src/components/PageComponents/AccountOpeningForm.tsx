@@ -22,7 +22,7 @@ interface AccountOpeningFormProps {
 
 const AccountOpeningFormPage = () => {
     const searchParams = useSearchParams()
-    const [current, setCurrent] = useState(2)
+    const [current, setCurrent] = useState(0)
 
     const {
         data: accountTypes
@@ -166,7 +166,9 @@ export default function AccountOpeningForm({citizenshipDetailResponse, authCode}
                     credit_card: 0,
                     locker: 0,
                     demat: 0,
-                    bancassurance: 0
+                    bancassurance: 0,
+                    declare_nominee: 0,
+                    declare_nominee_authorize: 0,
                 },
                 professionalDetails: {
                     profession: "Professional",
@@ -185,7 +187,8 @@ export default function AccountOpeningForm({citizenshipDetailResponse, authCode}
                     criminal_activity: 0,
                     foreign_country: 0,
                     agree_conditions: 1,
-                    politician: 0
+                    politician: 0,
+                    criminal_activity_desc: ''
                 },
             }
         }}>

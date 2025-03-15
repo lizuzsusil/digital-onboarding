@@ -27,7 +27,7 @@ export const locationQueries = {
             queryFn: locationApi.fetchAllDistricts,
         });
     },
-    useFetchDistrictById: (id: number) => {
+    useFetchDistrictById: (id: string) => {
         return useQuery({
             queryKey: locationKeys.LOCATION_DISTRICT,
             queryFn: () => locationApi.fetchDistrictById(id),

@@ -68,13 +68,16 @@ export default function OnlineAccountPage() {
     const searchParams = useSearchParams()
     const accountType = searchParams.get("accountType")
 
-    const {data: citizenshipDetails, isLoading} = useQuery({
-        queryKey: ['ctzn'],
-        queryFn: async () => {
-            const response = await HttpRequest.get('/res/ctznRes.json');
-            return response.data;
-        }
-    });
+    // const {data: citizenshipDetails, isLoading} = useQuery({
+    //     queryKey: ['ctzn'],
+    //     queryFn: async () => {
+    //         const response = await HttpRequest.get('/res/ctznRes.json');
+    //         return response.data;
+    //     }
+    // });
+
+    const {data: citizenshipDetails, isLoading} = citizenDetailQueries.useFetchCitizenDetails(authCode)
+
 
     useEffect(() => {
         if (accountType) {
@@ -156,7 +159,7 @@ export default function OnlineAccountPage() {
 
     return (
         <div className="container mx-auto">
-            {appAuthorized ? (
+            {!appAuthorized ? (
                 <NagarikAppAuthorization
                     handleSuccess={handleAuthorizationSuccess}
                     handleError={handleAuthorizationError}

@@ -100,10 +100,10 @@ function AccountInformation() {
                 <div className="grid grid-cols-12 gap-4">
                     {requiredServiceOptions.map((option) =>
                         <ReactHookFormCheckBox
+                            single
                             key={option.value} control={control}
                             name={`accountDetails.${option.value}`}
                             label={option.label}
-                            options={districtOptions ?? []}
                             rules={{required: {value: true, message: "Services is required"}}}
                         />)
                     }
@@ -114,10 +114,10 @@ function AccountInformation() {
                 <div className="grid grid-cols-12 gap-4">
                     {otherBankingProductOptions.map((option) =>
                         <ReactHookFormCheckBox
+                            single
                             key={option.value} control={control}
                             name={`accountDetails.${option.value}`}
                             label={option.label}
-                            options={districtOptions ?? []}
                             rules={{required: {value: true, message: "Banking product is required"}}}
                         />)
                     }

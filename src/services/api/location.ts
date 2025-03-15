@@ -17,7 +17,7 @@ export const locationApi = {
         const response = await HttpRequest.get<LocationResponse<DistrictModel>>(apiGetAllDistricts);
         return response.data
     },
-    fetchDistrictById: async (id: number) => {
+    fetchDistrictById: async (id: string) => {
         const response = await HttpRequest.get<LocationResponse<DistrictModel>>(apiGetDistrictById.substituteParameter({id}));
         return response.data
     },
