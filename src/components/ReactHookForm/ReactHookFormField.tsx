@@ -75,11 +75,6 @@ export default function ReactHookFormField<T extends FieldValues>({
                 const errorMessage = fieldState.error?.message || helperText;
                 return (
                     <div style={{width: fullWidth ? '100%' : 'auto'}}>
-                        {!hideLabel && label && (
-                            <label>
-                                {`${label}${rules?.required ? ' *' : ''}`}
-                            </label>
-                        )}
                         <Form.Item label={label} layout={layout}>
                             <InputComponent
                                 {...field}
@@ -99,12 +94,12 @@ export default function ReactHookFormField<T extends FieldValues>({
                                     if (selectOnFocus) e.target.select();
                                 }}
                             />
+                            {errorMessage && (
+                                <div style={{color: '#ff4d4f', fontSize: '12px', marginTop: 4}}>
+                                    {errorMessage}
+                                </div>
+                            )}
                         </Form.Item>
-                        {errorMessage && (
-                            <div style={{color: '#ff4d4f', fontSize: '12px', marginTop: 4}}>
-                                {errorMessage}
-                            </div>
-                        )}
                     </div>
                 );
             }}

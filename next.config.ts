@@ -3,10 +3,16 @@ import type {NextConfig} from "next";
 const nextConfig: NextConfig = {
     images: {
         unoptimized: true,
-        remotePatterns: [{
-            protocol: 'https',
-            hostname: '**.backend.nmb.com.np',
-        }]
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**.backend.nmb.com.np',
+            },
+            {
+                protocol: 'https',
+                hostname: '**.cdn.nagarikapp.gov.np',
+            }
+        ]
     },
 };
 

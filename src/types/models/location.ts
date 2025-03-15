@@ -14,6 +14,7 @@ export interface DistrictModel extends PrimaryBase, TimeStampBase {
     name_final: string;
     name_combined: string;
     code: string;
+    ng_id: string;
     state: StateModel;
     state_id: number;
     cbs_code: string | null;

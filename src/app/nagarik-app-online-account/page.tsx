@@ -1,12 +1,17 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
+import React, {useEffect, useState} from "react"
+import {useSearchParams} from "next/navigation"
 import NagarikAppAuthorization from "@/components/PageComponents/NagarikAppAuthorization";
-import {FormContainerContextProvider} from "@/contexts/FormContainerContext";
+import AccountOpeningForm from "@/components/PageComponents/AccountOpeningForm";
+import {citizenDetailQueries} from "@/services/queries/citizen-detail/citizenDetailQueries";
+import Loader from "@/components/Loader";
+import {useQuery} from "@tanstack/react-query";
+import {HttpRequest} from "@/services/request";
+import {BankAccountResponse} from "@/types/models/account";
 
-function OnlineAccount() {
-    const [appAuthorized, setAppAuthorized] = useState(false)
+export default function OnlineAccountPage() {
+    const [appAuthorized, setAppAuthorized] = useState<boolean>(false)
     const [formData, setFormData] = useState<any>({
         personalInformation: {},
         citizenshipInformation: {},
@@ -56,11 +61,20 @@ function OnlineAccount() {
             agree_conditions: 1,
         },
     })
+    const [authCode, setAuthCode] = useState<string>('');
     const [eligibilityErrors, setEligibilityErrors] = useState<string | null>(null)
     const [checkAlreadyAppliedData, setCheckAlreadyAppliedData] = useState<any>(null)
 
     const searchParams = useSearchParams()
     const accountType = searchParams.get("accountType")
+
+    const {data: citizenshipDetails, isLoading} = useQuery({
+        queryKey: ['ctzn'],
+        queryFn: async () => {
+            const response = await HttpRequest.get('/res/ctznRes.json');
+            return response.data;
+        }
+    });
 
     useEffect(() => {
         if (accountType) {
@@ -73,6 +87,7 @@ function OnlineAccount() {
 
     const handleAuthorizationSuccess = (data: any) => {
         setAppAuthorized(true)
+        setAuthCode(data)
         setFormData((prev: any) => ({
             ...prev,
             ...data,
@@ -140,30 +155,16 @@ function OnlineAccount() {
     }
 
     return (
-            <div className="flex flex-center">
-                {!appAuthorized ? (
-                    <NagarikAppAuthorization
-                        handleSuccess={handleAuthorizationSuccess}
-                        handleError={handleAuthorizationError}
-                        eligibilityErrors={eligibilityErrors}
-                    />
-                ) : (
-                    <h1>Test</h1>
-                )}
-            </div>
+        <div className="container mx-auto">
+            {appAuthorized ? (
+                <NagarikAppAuthorization
+                    handleSuccess={handleAuthorizationSuccess}
+                    handleError={handleAuthorizationError}
+                    eligibilityErrors={eligibilityErrors}
+                />
+            ) : (
+                isLoading ? <Loader/> : <AccountOpeningForm citizenshipDetailResponse={citizenshipDetails} authCode={authCode}/>
+            )}
+        </div>
     )
-}
-
-
-export default function Page() {
-    return (
-        <FormContainerContextProvider form={{
-            defaultValues: {
-                name: '',
-                address: ''
-            }
-        }}>
-            <OnlineAccount/>
-        </FormContainerContextProvider>
-    );
 }

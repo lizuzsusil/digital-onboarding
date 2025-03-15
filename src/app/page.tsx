@@ -10,7 +10,7 @@ import {accountTypeApi} from "@/services/api/account";
 export default async function Home() {
     const queryClient = new QueryClient()
 
-    await queryClient.prefetchQuery({
+    const accountTypes = await queryClient.fetchQuery({
         queryKey: accountQueryKeys.ACCOUNT_TYPES,
         queryFn: accountTypeApi.fetchAll,
     })
@@ -19,7 +19,9 @@ export default async function Home() {
         <HydrationBoundary state={dehydrate(queryClient)}>
             <div className="container mx-auto my-8">
                 <div className="grid grid-cols-4 gap-4">
-                    <AccountCard/>
+                    {accountTypes.data.map((accountType) => (
+                        <AccountCard key={accountType.id} accountDetail={accountType} />
+                    ))}
                 </div>
             </div>
         </HydrationBoundary>

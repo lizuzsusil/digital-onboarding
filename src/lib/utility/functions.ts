@@ -26,3 +26,31 @@ export function info(message?: never, ...optionalParams: never[]) {
         oldConsoleInfo.call(console, message, ...optionalParams)
     }
 }
+
+export const nepaliNumberToEnglish = (number?: string) => {
+    if (!number) return ""
+
+    const corresponding: Record<string, string> = {
+        "०": "0",
+        "१": "1",
+        "२": "2",
+        "३": "3",
+        "४": "4",
+        "५": "5",
+        "६": "6",
+        "७": "7",
+        "८": "8",
+        "९": "9",
+    }
+
+    let resp = ""
+    for (let i = 0; i < number.length; i++) {
+        const corr = corresponding[number[i]]
+        if (corr !== undefined) {
+            resp = resp + corr
+        } else {
+            resp = resp + number[i]
+        }
+    }
+    return resp
+}

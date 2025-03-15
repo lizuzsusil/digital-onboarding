@@ -7,7 +7,6 @@ import sha256 from "crypto-js/sha256";
 import {redirectionCodeQueries} from "@/services/queries/redirection-code/redirectionCodeQueries";
 import {nagarikWeb0AuthQueries} from "@/services/queries/nagarik-web0Auth/nagarikWeb0AuthQueries";
 import {createStompClient, requestAuthorizationCode} from "@/lib/utility/socket";
-import {citizenDetailQueries} from "@/services/queries/citizen-detail/citizenDetailQueries";
 import Loader from "@/components/Loader";
 
 const {Title, Text} = Typography
@@ -24,7 +23,7 @@ export default function NagarikAppAuthorization({
                                                     eligibilityErrors,
                                                 }: NagarikAppAuthorizationProps) {
     const [qrLoading, setQrLoading] = useState<boolean>(true)
-    const [authCode, setAuthCode] = useState<string>('');
+
     const [showRefreshBtn, setShowRefreshBtn] = useState<boolean>(false)
     const [qrValue, setQrValue] = useState<string>("")
 
@@ -33,9 +32,6 @@ export default function NagarikAppAuthorization({
         mutate: checkChallengeHash,
         data: challengeHashData
     } = nagarikWeb0AuthQueries.usePostChallengeHash()
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const {data: citizenshipDetails} = citizenDetailQueries.useFetchCitizenDetails(authCode);
 
     const fetchRedirectionCode = useCallback(async (type?: string) => {
         setQrLoading(true)
@@ -51,11 +47,11 @@ export default function NagarikAppAuthorization({
         }
     }, [refetchRedirectionCode])
 
-    useEffect(() => {
+/*    useEffect(() => {
         if (authCode) {
             handleSuccess(authCode)
         }
-    }, [authCode, handleSuccess]);
+    }, [authCode, handleSuccess]);*/
 
     useEffect(() => {
         fetchRedirectionCode().then()
@@ -80,10 +76,10 @@ export default function NagarikAppAuthorization({
                             randomString,
                             (response) => {
                                 if (response.authorization_code) {
-                                    setAuthCode(response.authorization_code)
+                                    handleSuccess(response.authorization_code)
                                 } else {
                                     setShowRefreshBtn(true)
-                                    handleError(response)
+                                    handleError(response as never)
                                     console.log("Cancelled by user")
                                 }
                             },

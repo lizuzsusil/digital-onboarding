@@ -3,7 +3,6 @@ import {Button as ButtonAntd, ButtonProps} from 'antd';
 import type {ButtonType} from "antd/lib/button/buttonHelpers";
 
 interface iButtonProps extends ButtonProps {
-    buttonText: string;
     styleClass?: string;
     onClick?: () => void;
     iconPosition?: 'start' | 'end';
@@ -11,7 +10,7 @@ interface iButtonProps extends ButtonProps {
 }
 
 function Button({
-                    buttonText,
+                    children,
                     styleClass,
                     onClick,
                     iconPosition = 'end',
@@ -26,7 +25,7 @@ function Button({
             type={type}
             {...restProps}
         >
-            {buttonText}
+            {children}
         </ButtonAntd>
     );
 }

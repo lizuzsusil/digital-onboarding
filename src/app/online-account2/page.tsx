@@ -2,8 +2,8 @@
 import React, {useState} from 'react';
 import {FormContainerContextProvider} from "@/contexts/FormContainerContext";
 import {Steps} from "antd";
-import AvailableDetails from "@/app/online-account/availableDetails";
-import Step2 from "@/app/online-account/Step2";
+import AvailableDetails from "@/app/nagarik-app-online-account/availableDetails";
+import Step2 from "@/app/nagarik-app-online-account/Step2";
 
 const {Step} = Steps;
 
