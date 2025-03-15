@@ -158,7 +158,16 @@ export default function AccountOpeningForm({citizenshipDetailResponse, authCode}
                 permanentAddress: {},
                 temporaryAddress: {},
                 familyDetails: {},
-                accountDetails: {},
+                accountDetails: {
+                    mobile_banking: 0,
+                    internet_banking: 0,
+                    debit_card: 0,
+                    cheque_book: 0,
+                    credit_card: 0,
+                    locker: 0,
+                    demat: 0,
+                    bancassurance: 0
+                },
                 professionalDetails: {
                     profession: "Professional",
                     related_businesses: [{

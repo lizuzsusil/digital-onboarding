@@ -104,7 +104,7 @@ function AccountInformation() {
                             name={`accountDetails.${option.value}`}
                             label={option.label}
                             options={districtOptions ?? []}
-                            rules={{required: {value: true, message: "District is required"}}}
+                            rules={{required: {value: true, message: "Services is required"}}}
                         />)
                     }
                 </div>
@@ -118,7 +118,7 @@ function AccountInformation() {
                             name={`accountDetails.${option.value}`}
                             label={option.label}
                             options={districtOptions ?? []}
-                            rules={{required: {value: true, message: "District is required"}}}
+                            rules={{required: {value: true, message: "Banking product is required"}}}
                         />)
                     }
                 </div>

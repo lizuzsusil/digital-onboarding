@@ -108,7 +108,7 @@ export const requiredServiceOptions = [
         label: "Cheque Book",
         value: "cheque_book",
     }
-]
+] as const;
 
 export const otherBankingProductOptions = [
     {
@@ -127,4 +127,4 @@ export const otherBankingProductOptions = [
         label: "Bancassurance",
         value: "bancassurance",
     }
-]
+] as const;
